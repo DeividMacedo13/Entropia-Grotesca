@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Entropia Grotesca — uma tipografia experimental e variável de Deivid Macedo.">
+  <meta name="theme-color" content="#191919">
+  <title>Entropia Grotesca — Deivid Macedo</title>
+  <link rel="preload" href="assets/fonts/EntropiaGrotescaVF.ttf" as="font" type="font/ttf" crossorigin>
+  <link rel="stylesheet" href="styles.css">
+  <script src="glyphs-data.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <header class="site-header" id="topo">
+    <nav class="nav-left" aria-label="Navegação principal">
+      <a href="#cartazes">PÔSTERES</a>
+      <a href="#projeto">SOBRE</a>
+    </nav>
+
+    <a class="brand" href="#topo" aria-label="Entropia Grotesca — início">
+      <span class="brand-letters" id="brandLetters" aria-hidden="true"></span>
+      <span class="brand-sub" id="brandSub" aria-hidden="true"></span>
+    </a>
+
+    <div class="nav-right">
+      <span>DEIVID MACEDO · 2026</span>
+      <a href="#download">DOWNLOAD ↘</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-topline"><span>TIPOGRAFIA GROTESCA EXPERIMENTAL</span><span>FONTE VARIÁVEL · 2026</span></div>
+      <h1 class="hero-title" id="hero-title">ENTROPIA</h1>
+      <div class="hero-bottomline">
+        <p>Uma investigação tipográfica sobre a relação entre ordem e desordem.</p>
+        <a href="#explorador">EXPLORE A FORMA <span>↓</span></a>
+      </div>
+    </section>
+
+    <section class="project-note" id="projeto">
+      <div class="project-note-top"><span>01 / SOBRE O PROJETO</span><span>ENTROPIA GROTESCA</span></div>
+      <div class="project-note-content">
+        <h2>Uma tipografia<br>em <em>transformação.</em></h2>
+        <p>Entropia Grotesca é uma tipografia grotesca experimental que investiga a relação entre ordem e desordem por meio de dois eixos variáveis: entropia e peso.</p>
+      </div>
+    </section>
+
+    <section class="poster-section" id="cartazes">
+      <div class="poster-heading"><span>02 / SISTEMA VISUAL</span><span>PÔSTERES · 2026</span></div>
+      <div class="featured-poster-layout">
+        <figure class="featured-poster">
+          <img src="assets/posters/poster-02.webp" alt="Pôster branco com letras e palavras em magenta e preto, dispersas em diferentes direções e escalas." loading="lazy">
+          <figcaption><span>ORDEM / DESORDEM</span><span>01 — 05</span></figcaption>
+        </figure>
+        <div class="featured-note">
+          <span>COMPOSIÇÃO EM DESTAQUE</span>
+          <h2>Nada permanece<br>em seu estado<br><em>original.</em></h2>
+          <p>As formas se repetem, se deslocam e se reorganizam. A composição explora o comportamento da tipografia entre estrutura e transformação.</p>
+        </div>
+      </div>
+
+      <div class="poster-grid" aria-label="Outros pôsteres da Entropia Grotesca">
+        <figure>
+          <img src="assets/posters/poster-01.webp" alt="Pôster preto com um caractere construído por linhas magenta sobrepostas." loading="lazy">
+          <figcaption><span>FORMA / REPETIÇÃO</span><span>02</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/posters/poster-03.webp" alt="Pôster preto com a palavra Entropia em letras brancas e contornos magenta." loading="lazy">
+          <figcaption><span>EXPANSÃO</span><span>03</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/posters/poster-04.webp" alt="Pôster modular em magenta, preto e branco, com asterisco, números, letras N e um F deformado." loading="lazy">
+          <figcaption><span>GLIFOS / VARIAÇÕES</span><span>04</span></figcaption>
+        </figure>
+        <figure>
+          <img src="assets/posters/poster-05.webp" alt="Pôster tipográfico com letras enormes em magenta e a frase Nada permanece em seu estado original." loading="lazy">
+          <figcaption><span>ESCALA / CONTRASTE</span><span>05</span></figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="download-section" id="download">
+      <div class="download-top"><span>DEIVID MACEDO</span><span>ENTROPIA GROTESCA · 2026</span></div>
+      <div class="download-content">
+        <span class="download-label">ARQUIVO DA FONTE</span>
+        <h2>Leve a Entropia<br><em>com você.</em></h2>
+        <a class="download-button" href="assets/fonts/EntropiaGrotescaVF.ttf" download="EntropiaGrotescaVF.ttf"><span>DOWNLOAD DA FONTE (.TTF)</span><b>↗</b></a>
+      </div>
+    </section>
+
+    <section class="explorer-section" id="explorador">
+      <div class="section-heading">
+        <div><span class="section-index">03 / EXPLORADOR DE GLIFOS</span><h2>Explore a forma.</h2></div>
+        <p>Passe o cursor para experimentar.<br>Clique em um glifo para fixá-lo e editar seus eixos.</p>
+      </div>
+
+      <div class="explorer-workspace">
+        <div class="explorer-panel">
+          <div class="glyph-browser">
+          <div class="browser-heading">
+            <span>CARACTERES DISPONÍVEIS <b id="allCount">183</b></span>
+            <label class="glyph-search" for="glyphSearch">
+              <span>⌕</span>
+              <input id="glyphSearch" type="search" placeholder="Buscar glifo / Unicode" autocomplete="off">
+              <kbd>/</kbd>
+            </label>
+          </div>
+
+          <div class="glyph-grid" id="glyphGrid" aria-live="polite"></div>
+          <div class="grid-foot"><span id="glyphCount">183 GLIFOS</span><span>HOVER / CLIQUE PARA EXPLORAR</span></div>
+        </div>
+
+        <aside class="glyph-detail" aria-label="Visualização e edição do glifo">
+          <div class="detail-topline"><span>GLIFO EM EXPLORAÇÃO</span><span id="detailState">VISUALIZAÇÃO</span><span id="selectedCode">U+0041</span></div>
+          <div class="selected-stage" id="selectedStage">
+            <span class="selected-glyph" id="selectedGlyph">A</span>
+            <span class="stage-cross cross-top">+</span>
+            <span class="stage-cross cross-bottom">+</span>
+          </div>
+          <div class="selected-meta"><span id="selectedName">A / LATIN CAPITAL LETTER A</span><span id="selectedUnicode">U+0041</span></div>
+
+          <div class="axis-controls" id="axisControls" aria-disabled="true">
+            <div class="controls-heading"><span>EIXOS VARIÁVEIS</span><button id="resetAxes" type="button" disabled>RESET ↺</button></div>
+            <p class="controls-hint" id="controlsHint">Clique em um caractere para fixá-lo e liberar os controles.</p>
+            <div class="axis-control">
+              <div class="axis-label"><label for="entropyRange">ENTROPIA <small>ENTP</small></label><output id="entropyValue" for="entropyRange">0</output></div>
+              <input id="entropyRange" type="range" min="0" max="100" step="1" value="0" disabled>
+              <div class="range-ends"><span>0</span><span>100</span></div>
+            </div>
+            <div class="axis-control">
+              <div class="axis-label"><label for="weightRange">PESO <small>wght</small></label><output id="weightValue" for="weightRange">80</output></div>
+              <input id="weightRange" type="range" min="80" max="160" step="1" value="80" disabled>
+              <div class="range-ends"><span>80</span><span>160</span></div>
+            </div>
+            <div class="axis-readout" id="axisReadout">ENTP 000 / WGHT 080</div>
+          </div>
+        </aside>
+        </div>
+
+        <div class="tester">
+          <div class="tester-heading"><span>TESTE A TIPOGRAFIA</span><span>ESCREVA E EXPERIMENTE</span></div>
+        <textarea id="testerInput" rows="2" spellcheck="false" aria-label="Digite um texto para testar a tipografia">Nada permanece em seu estado original.</textarea>
+          <div class="tester-preview" id="testerPreview">Nada permanece em seu estado original.</div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer"><a href="#topo">ENTROPIA GROTESCA ↑</a><span>TIPOGRAFIA EXPERIMENTAL · PROJETO DE CONCLUSÃO DE CURSO</span><span>© DEIVID MACEDO · 2026</span></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

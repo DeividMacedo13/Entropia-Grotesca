@@ -1,0 +1,64 @@
+ENTROPIA GROTESCA — SITE DE APRESENTAÇÃO · VERSÃO 5
+===================================================
+
+Esta versão reúne os ajustes de navegação, hierarquia tipográfica e interação
+solicitados para a apresentação do projeto de TCC. É uma página editorial de
+apresentação, não uma loja.
+
+DIREÇÃO VISUAL
+--------------
+- A interface utiliza a fonte variável Entropia Grotesca.
+- Cores: magenta #EC008C, branco #FFFFFF e preto suavizado #191919.
+- ENTROPIA e GROTESCA ficam centralizadas na navbar; cada letra de ambas as
+  palavras recebe variações independentes e aleatórias dos eixos da fonte.
+- O título principal ENTROPIA utiliza o peso máximo (160 / Bold).
+- O texto descritivo da seção Sobre está alinhado pelo topo com o título.
+- O título e as informações da área de download usam peso Bold.
+- As cinco peças gráficas permanecem na seção de pôsteres, com o pôster branco
+  de letras dispersas em destaque.
+
+EXPLORADOR DE GLIFOS
+--------------------
+- Os 183 caracteres mapeados começam no eixo Regular: ENTP 0 / WGHT 80.
+- A grade exibe 14 colunas em telas grandes, 10 em tablets e 7 em celulares
+  (6 em telas muito estreitas), para preservar a legibilidade.
+- As abas de filtros por A–Z, a–z, números, acentos e símbolos foram removidas.
+- A busca por caractere, nome ou código Unicode continua disponível.
+- Ao passar o cursor sobre um glifo, a visualização ampliada exibe uma forma
+  temporária com valores aleatórios de Entropia e Peso.
+- Ao clicar em um glifo, ele fica fixado e conserva a variação que estava sendo
+  visualizada. Os controles ENTP e WGHT ficam habilitados para edição manual.
+- Passar o cursor por outro glifo mostra uma prévia temporária; ao sair dele,
+  o glifo fixado e seus valores editados voltam a aparecer.
+- O botão RESET retorna o glifo fixado aos valores regulares (ENTP 0 / WGHT 80).
+- O campo “Teste a tipografia” fica imediatamente abaixo do explorador e utiliza
+  os eixos editados no glifo fixado.
+
+COMO ABRIR OFFLINE
+------------------
+1. Extraia o ZIP.
+2. Abra a pasta entropia-site-v5.
+3. Dê dois cliques em index.html.
+4. Mantenha todos os arquivos e subpastas juntos.
+
+Não precisa instalar nada, iniciar localhost ou estar conectado à internet.
+
+COMO PUBLICAR COM LINK GRATUITO
+-------------------------------
+1. Acesse https://app.netlify.com/drop
+2. Entre ou crie uma conta gratuita.
+3. Arraste a pasta entropia-site-v5 inteira para a página.
+4. Copie o endereço .netlify.app gerado.
+
+ARQUIVOS
+--------
+index.html       Estrutura e conteúdo.
+styles.css       Layout, cores e tipografia.
+script.js        Animações, explorador e controles variáveis.
+glyphs-data.js   Caracteres mapeados da fonte recebida.
+assets/fonts/    Arquivo TTF variável original.
+assets/posters/  Os cinco pôsteres enviados em PDF.
+
+O botão DOWNLOAD DA FONTE (.TTF) aponta para o arquivo variável incluído.
+Antes de compartilhar publicamente, confirme que esta é a versão da fonte que
+você deseja disponibilizar.
