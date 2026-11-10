@@ -1,64 +1,99 @@
-ENTROPIA GROTESCA — SITE DE APRESENTAÇÃO · VERSÃO 5
+ENTROPIA GROTESCA — SITE DE APRESENTAÇÃO · VERSÃO 11
 ===================================================
 
-Esta versão reúne os ajustes de navegação, hierarquia tipográfica e interação
-solicitados para a apresentação do projeto de TCC. É uma página editorial de
-apresentação, não uma loja.
+Esta versão acrescenta uma capa tipográfica interativa à página de apresentação.
+A composição apresenta “ENTROPIA” e “GROTESCA” em caixa alta, centralizadas em
+duas linhas. Ao redor, uma quantidade menor de letras minúsculas, em escalas
+maiores, surge em posições, pesos e graus de entropia aleatórios a cada carregamento.
 
-DIREÇÃO VISUAL
---------------
+CAPA INTERATIVA
+---------------
+- A capa utiliza a própria Entropia Grotesca variável, não imagens ou texto
+  convertido em contorno.
+- Os caracteres são elementos individuais e podem ser arrastados com mouse,
+  toque ou trackpad.
+- Também é possível mover a letra selecionada com as setas do teclado; use
+  Shift + setas para deslocamentos maiores.
+- Não existe botão para reiniciar a composição: as posições aleatórias de cada
+  visita permanecem como parte do comportamento entrópico da capa.
+
+TELA DE DESCANSO
+---------------
+- Após 18 segundos sem movimento, toque, clique, rolagem ou teclado, um asterisco
+  grande aparece sobre o conteúdo atual, usando o glifo da própria Entropia Grotesca.
+- A camada de descanso não tem fundo nem legenda: somente o asterisco magenta fica visível.
+- O asterisco percorre a tela continuamente na diagonal e rebate nas bordas,
+  como o protetor de tela de DVD. Os limites de colisão usam a área ocupada pelo
+  desenho visível do glifo, não a caixa de linha invisível da fonte, permitindo
+  que ele chegue praticamente até as extremidades da tela. A cada colisão, muda
+  entropia, peso, rotação e escala.
+- Qualquer nova interação esconde o símbolo e reinicia a contagem.
+- A tela de descanso não aparece enquanto a aba do navegador está em segundo plano.
+- A composição mantém a paleta da identidade: magenta #EC008C, preto #191919
+  e branco #FFFFFF.
+
+DIREÇÃO VISUAL E CONTEÚDO
+-------------------------
 - A interface utiliza a fonte variável Entropia Grotesca.
-- Cores: magenta #EC008C, branco #FFFFFF e preto suavizado #191919.
+- As cores permanecem magenta #EC008C, branco #FFFFFF e preto suavizado #191919.
 - ENTROPIA e GROTESCA ficam centralizadas na navbar; cada letra de ambas as
   palavras recebe variações independentes e aleatórias dos eixos da fonte.
-- O título principal ENTROPIA utiliza o peso máximo (160 / Bold).
-- O texto descritivo da seção Sobre está alinhado pelo topo com o título.
+- A capa destaca o nome em duas linhas e o envolve com uma quantidade menor de
+  letras minúsculas maiores, dispersas, que podem ser reorganizadas manualmente.
+- A seção Sobre vem antes dos pôsteres.
+- Os cinco pôsteres permanecem na página, com o pôster branco de letras
+  dispersas em destaque.
 - O título e as informações da área de download usam peso Bold.
-- As cinco peças gráficas permanecem na seção de pôsteres, com o pôster branco
-  de letras dispersas em destaque.
 
 EXPLORADOR DE GLIFOS
 --------------------
 - Os 183 caracteres mapeados começam no eixo Regular: ENTP 0 / WGHT 80.
+- A área de visualização ampliada tem altura e respiro adicionais para que acentos,
+  diacríticos e marcas combinantes não sejam cortados. Em telas estreitas, o painel
+  de visualização passa para baixo da grade e ocupa toda a largura disponível.
 - A grade exibe 14 colunas em telas grandes, 10 em tablets e 7 em celulares
   (6 em telas muito estreitas), para preservar a legibilidade.
-- As abas de filtros por A–Z, a–z, números, acentos e símbolos foram removidas.
 - A busca por caractere, nome ou código Unicode continua disponível.
 - Ao passar o cursor sobre um glifo, a visualização ampliada exibe uma forma
   temporária com valores aleatórios de Entropia e Peso.
-- Ao clicar em um glifo, ele fica fixado e conserva a variação que estava sendo
-  visualizada. Os controles ENTP e WGHT ficam habilitados para edição manual.
+- Ao clicar em um glifo, ele fica fixado e conserva a variação visualizada.
+  Os controles ENTP e WGHT ficam habilitados para edição manual.
 - Passar o cursor por outro glifo mostra uma prévia temporária; ao sair dele,
   o glifo fixado e seus valores editados voltam a aparecer.
 - O botão RESET retorna o glifo fixado aos valores regulares (ENTP 0 / WGHT 80).
-- O campo “Teste a tipografia” fica imediatamente abaixo do explorador e utiliza
-  os eixos editados no glifo fixado.
+- O campo “Teste a tipografia” fica imediatamente abaixo do explorador.
 
 COMO ABRIR OFFLINE
 ------------------
 1. Extraia o ZIP.
-2. Abra a pasta entropia-site-v5.
+2. Abra a pasta entropia-site-v11.
 3. Dê dois cliques em index.html.
 4. Mantenha todos os arquivos e subpastas juntos.
 
 Não precisa instalar nada, iniciar localhost ou estar conectado à internet.
 
-COMO PUBLICAR COM LINK GRATUITO
--------------------------------
-1. Acesse https://app.netlify.com/drop
-2. Entre ou crie uma conta gratuita.
-3. Arraste a pasta entropia-site-v5 inteira para a página.
-4. Copie o endereço .netlify.app gerado.
+COMO ATUALIZAR O SITE NO GITHUB PAGES
+-------------------------------------
+1. Extraia o ZIP e abra a pasta entropia-site-v11.
+2. Abra seu repositório no GitHub e escolha Add file > Upload files.
+3. Envie o conteúdo desta pasta diretamente para a raiz do repositório
+   (index.html, styles.css, script.js, glyphs-data.js, LEIA-ME.txt e a pasta assets).
+   Não envie a pasta entropia-site-v11 como uma subpasta.
+4. Confirme em Commit changes na branch main.
+5. O GitHub Pages atualizará o site publicado automaticamente.
+
+Se o GitHub Pages já estiver ativo, não é necessário configurar a publicação
+novamente. O repositório deve permanecer público no plano gratuito do GitHub Pages.
 
 ARQUIVOS
 --------
 index.html       Estrutura e conteúdo.
 styles.css       Layout, cores e tipografia.
-script.js        Animações, explorador e controles variáveis.
+script.js        Capa aleatória e arrastável, animações, tela de descanso, explorador e controles variáveis.
 glyphs-data.js   Caracteres mapeados da fonte recebida.
 assets/fonts/    Arquivo TTF variável original.
 assets/posters/  Os cinco pôsteres enviados em PDF.
 
 O botão DOWNLOAD DA FONTE (.TTF) aponta para o arquivo variável incluído.
 Antes de compartilhar publicamente, confirme que esta é a versão da fonte que
-você deseja disponibilizar.
+a pessoa deseja disponibilizar.

@@ -32,7 +32,15 @@
   <main>
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-topline"><span>TIPOGRAFIA GROTESCA EXPERIMENTAL</span><span>FONTE VARIÁVEL · 2026</span></div>
-      <h1 class="hero-title" id="hero-title">ENTROPIA</h1>
+      <h1 class="visually-hidden" id="hero-title">Entropia Grotesca</h1>
+      <div class="cover-stage" id="coverStage" aria-label="Capa tipográfica interativa. As letras minúsculas aparecem em posições diferentes a cada visita; arraste-as para reorganizar a composição.">
+        <div class="cover-glyph-field" id="coverGlyphField" aria-hidden="false"></div>
+        <div class="cover-title" aria-hidden="true">
+          <span>ENTROPIA</span>
+          <span>GROTESCA</span>
+        </div>
+        <div class="cover-stage-note">ARRASTE AS LETRAS PARA REORGANIZAR</div>
+      </div>
       <div class="hero-bottomline">
         <p>Uma investigação tipográfica sobre a relação entre ordem e desordem.</p>
         <a href="#explorador">EXPLORE A FORMA <span>↓</span></a>
@@ -150,5 +158,8 @@
 
   <footer class="site-footer"><a href="#topo">ENTROPIA GROTESCA ↑</a><span>TIPOGRAFIA EXPERIMENTAL · PROJETO DE CONCLUSÃO DE CURSO</span><span>© DEIVID MACEDO · 2026</span></footer>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="idle-screen" id="idleScreen" aria-hidden="true">
+    <span class="idle-symbol" id="idleAsterisk" aria-hidden="true">*</span>
+  </div>
 </body>
 </html>

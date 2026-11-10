@@ -274,22 +274,26 @@ button { cursor: pointer; }
 .detail-topline { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line-dark); }
 .detail-topline span:last-child { color: var(--magenta); }
 .selected-stage {
-  min-height: clamp(170px, 23vw, 300px);
+  min-height: clamp(320px, 34vw, 460px);
+  padding: 34px 18px;
   background: transparent;
   color: var(--magenta);
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
   margin-top: 2px;
 }
 .selected-glyph {
   display: block;
   max-width: 100%;
-  font-size: clamp(130px, 19vw, 270px);
-  line-height: .82;
-  letter-spacing: -.06em;
+  padding: .12em .04em .16em;
+  font-size: clamp(160px, 22vw, 340px);
+  line-height: 1.22;
+  letter-spacing: 0;
+  text-align: center;
+  overflow: visible;
   font-variation-settings: "ENTP" 0, "wght" 80;
   transition: font-variation-settings .4s cubic-bezier(.2,.8,.2,1);
 }
@@ -380,8 +384,9 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius
   .section-heading { margin-bottom: 15px; gap: 10px; }
   .section-heading h2 { font-size: 36px; }
   .section-heading p { font-size: 9px; }
-  .explorer-panel { grid-template-columns: minmax(0, 1.08fr) minmax(118px, .72fr); }
-  .glyph-browser, .glyph-detail { padding: 7px; }
+  .explorer-panel { grid-template-columns: minmax(0, 1fr); }
+  .glyph-browser, .glyph-detail { padding: 10px; }
+  .glyph-detail { border-left: 0; border-top: 1px solid var(--line-dark); }
   .browser-heading { align-items: flex-start; flex-direction: column; gap: 5px; font-size: 7px; }
   .glyph-search { width: 100%; min-width: 0; height: 25px; }
   .glyph-search input { font-size: 8px; }
@@ -392,8 +397,8 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius
   .glyph-tile .tile-label { font-size: 5px; }
   .grid-foot { flex-direction: column; gap: 3px; font-size: 6px; }
   .detail-topline, .selected-meta, .controls-heading, .axis-label, .range-ends, .axis-readout { font-size: 6px; }
-  .selected-stage { min-height: 135px; }
-  .selected-glyph { font-size: clamp(78px, 25vw, 145px); }
+  .selected-stage { min-height: clamp(260px, 70vw, 340px); padding: 28px 12px; }
+  .selected-glyph { font-size: clamp(145px, 38vw, 230px); line-height: 1.22; }
   .selected-meta { flex-direction: column; gap: 3px; }
   .axis-controls { padding-top: 8px; }
   .controls-hint { font-size: 7px; }
@@ -414,11 +419,182 @@ input[type="range"]::-moz-range-thumb { width: 12px; height: 12px; border-radius
 
 @media (max-width: 370px) {
   .nav-left a:nth-child(2) { display: none; }
-  .explorer-panel { grid-template-columns: minmax(0, 1fr) 112px; }
+  .explorer-panel { grid-template-columns: minmax(0, 1fr); }
   .glyph-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+}
+
+/* Capa: título central em duas linhas e letras minúsculas dispersas a cada visita. */
+.hero {
+  padding: 24px var(--pad) 28px;
+  background: var(--white);
+  color: var(--black);
+  border-bottom: 1px solid var(--line-light);
+}
+.hero-topline {
+  color: var(--black);
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--line-light);
+}
+.hero-topline span:first-child { color: var(--magenta); }
+.hero-bottomline {
+  color: var(--black);
+  border-top: 1px solid var(--line-light);
+  padding-top: 11px;
+  margin-top: 3px;
+}
+.hero-bottomline a { border-color: var(--black); }
+.hero-bottomline a span { color: var(--magenta); }
+.cover-stage {
+  position: relative;
+  width: 100%;
+  height: clamp(470px, 65vw, 720px);
+  max-height: calc(100svh - 140px);
+  min-height: 440px;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--white);
+  color: var(--magenta);
+  touch-action: pan-y;
+}
+.cover-glyph-field { position: absolute; inset: 0; overflow: hidden; }
+.cover-glyph {
+  position: absolute;
+  display: block;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  outline: 0;
+  background: transparent;
+  font-family: "Entropia Grotesca", sans-serif;
+  font-synthesis: none;
+  line-height: .82;
+  letter-spacing: 0;
+  white-space: pre;
+  text-align: center;
+  transform: translate(-50%, -50%);
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: none;
+  transition: color .16s ease, font-variation-settings .28s ease;
+}
+.cover-glyph.cover-magenta { color: var(--magenta); }
+.cover-glyph.cover-black { color: var(--black); }
+.cover-glyph:hover { z-index: 8; }
+.cover-glyph.is-dragging {
+  z-index: 12 !important;
+  cursor: grabbing;
+  color: var(--black);
+  transition: none;
+}
+.cover-glyph:focus-visible {
+  z-index: 13;
+  outline: 1px solid var(--magenta);
+  outline-offset: 5px;
+}
+.cover-title {
+  position: absolute;
+  z-index: 9;
+  inset: 50% auto auto 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .015em;
+  width: max-content;
+  max-width: 94%;
+  transform: translate(-50%, -50%);
+  color: var(--black);
+  font-family: "Entropia Grotesca", sans-serif;
+  font-size: clamp(44px, 9.2vw, 142px);
+  font-weight: 160;
+  font-variation-settings: "ENTP" 0, "wght" 160;
+  line-height: .78;
+  letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+.cover-title span { display: block; }
+.cover-stage-note {
+  position: absolute;
+  z-index: 15;
+  left: 0;
+  bottom: 9px;
+  color: var(--black);
+  font-size: 9px;
+  letter-spacing: .08em;
+  pointer-events: none;
+}
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
+}
+
+/* Descanso: somente o asterisco, sem fundo ou legenda, flutua sobre a página. */
+.idle-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  overflow: hidden;
+  background: transparent;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease;
+}
+.idle-screen.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+.idle-symbol {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: block;
+  color: var(--magenta);
+  font-family: "Entropia Grotesca", sans-serif;
+  font-size: min(58vmin, 680px);
+  font-weight: 160;
+  font-variation-settings: "ENTP" 35, "wght" 160;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  transition: transform .34s cubic-bezier(.2,.72,.22,1), font-variation-settings .38s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: left, top, transform, font-variation-settings;
+}
+
+@media (max-width: 650px) {
+  .hero { padding-top: 19px; padding-bottom: 20px; }
+  .cover-stage {
+    height: clamp(390px, 126vw, 540px);
+    min-height: 390px;
+    max-height: none;
+  }
+  .cover-title { font-size: clamp(39px, 10vw, 68px); }
+  .cover-stage-note { bottom: 7px; font-size: 7px; }
+  .hero-bottomline { margin-top: 2px; }
+  .idle-symbol { font-size: min(68vmin, 420px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover-glyph { transition: none; }
+  .idle-symbol { transition: none; }
+  .idle-screen { transition: none; }
 }

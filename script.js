@@ -240,6 +240,325 @@
     $("#allCount").textContent = allGlyphs.length;
   }
 
+
+  function initInteractiveCover() {
+    const stage = $("#coverStage");
+    const field = $("#coverGlyphField");
+    if (!stage || !field) return;
+
+    // Letras minúsculas da própria expressão, espalhadas de modo diferente a cada visita.
+    const alphabet = [..."entropiagrotesca"].filter(character => character !== " ");
+    let dragZ = 30;
+    const stageRect = stage.getBoundingClientRect();
+    // Menos caracteres, em escalas maiores, mantendo o respiro ao redor do título.
+    const count = stageRect.width < 620 ? 22 : 38;
+
+    const randomBetween = (min, max) => min + Math.random() * (max - min);
+    const pick = values => values[Math.floor(Math.random() * values.length)];
+
+    function randomPosition() {
+      // Reserva a área central para o título em duas linhas; a dispersão ocupa as bordas.
+      let x = 0, y = 0, attempts = 0;
+      do {
+        x = randomBetween(2.5, 97.5);
+        y = randomBetween(4, 96);
+        attempts += 1;
+      } while (attempts < 80 && x > 17 && x < 83 && y > 30 && y < 70);
+      return { x, y };
+    }
+
+    function applyPosition(button, x, y) {
+      button.dataset.x = String(x);
+      button.dataset.y = String(y);
+      button.style.left = `${x}%`;
+      button.style.top = `${y}%`;
+    }
+
+    function makeGlyph(index) {
+      const button = document.createElement("button");
+      const position = randomPosition();
+      const size = pick([34, 44, 56, 70, 86, 104, 124, 146, 168, 190]);
+      const entp = Math.round(randomBetween(5, 100));
+      const weight = Math.round(randomBetween(80, 160));
+      const rotation = Math.round(randomBetween(-32, 32));
+      const color = Math.random() < 0.76 ? "magenta" : "black";
+
+      button.type = "button";
+      button.className = `cover-glyph cover-${color}`;
+      button.textContent = pick(alphabet);
+      button.style.fontSize = `clamp(${Math.max(12, size * 0.62)}px, ${size / 13}vw, ${size}px)`;
+      button.style.fontVariationSettings = variation(entp, weight);
+      button.style.transform = `translate(-50%, -50%) rotate(${rotation}deg)`;
+      button.style.zIndex = String(1 + Math.floor(Math.random() * 5));
+      button.dataset.rotation = String(rotation);
+      button.setAttribute("aria-label", `Letra minúscula ${button.textContent}. Arraste para mover.`);
+      button.title = "Arraste esta letra para mover";
+      applyPosition(button, position.x, position.y);
+
+      let pointerStart = null;
+      button.addEventListener("pointerdown", event => {
+        if (event.button !== undefined && event.button !== 0) return;
+        event.preventDefault();
+        const rect = stage.getBoundingClientRect();
+        pointerStart = {
+          pointerId: event.pointerId,
+          clientX: event.clientX,
+          clientY: event.clientY,
+          x: Number(button.dataset.x),
+          y: Number(button.dataset.y),
+          width: rect.width,
+          height: rect.height
+        };
+        button.classList.add("is-dragging");
+        button.style.zIndex = String(++dragZ);
+        button.setPointerCapture(event.pointerId);
+      });
+
+      button.addEventListener("pointermove", event => {
+        if (!pointerStart || event.pointerId !== pointerStart.pointerId) return;
+        event.preventDefault();
+        const dx = ((event.clientX - pointerStart.clientX) / pointerStart.width) * 100;
+        const dy = ((event.clientY - pointerStart.clientY) / pointerStart.height) * 100;
+        const nextX = Math.max(1.5, Math.min(98.5, pointerStart.x + dx));
+        const nextY = Math.max(2, Math.min(98, pointerStart.y + dy));
+        applyPosition(button, nextX, nextY);
+      });
+
+      const finishDrag = event => {
+        if (!pointerStart || event.pointerId !== pointerStart.pointerId) return;
+        pointerStart = null;
+        button.classList.remove("is-dragging");
+      };
+      button.addEventListener("pointerup", finishDrag);
+      button.addEventListener("pointercancel", finishDrag);
+      button.addEventListener("lostpointercapture", () => {
+        pointerStart = null;
+        button.classList.remove("is-dragging");
+      });
+
+      button.addEventListener("keydown", event => {
+        const step = event.shiftKey ? 3 : 1;
+        let nextX = Number(button.dataset.x);
+        let nextY = Number(button.dataset.y);
+        if (event.key === "ArrowLeft") nextX -= step;
+        else if (event.key === "ArrowRight") nextX += step;
+        else if (event.key === "ArrowUp") nextY -= step;
+        else if (event.key === "ArrowDown") nextY += step;
+        else return;
+        event.preventDefault();
+        nextX = Math.max(1.5, Math.min(98.5, nextX));
+        nextY = Math.max(2, Math.min(98, nextY));
+        applyPosition(button, nextX, nextY);
+        button.style.zIndex = String(++dragZ);
+      });
+
+      field.append(button);
+    }
+
+    field.replaceChildren();
+    for (let index = 0; index < count; index += 1) makeGlyph(index);
+
+  }
+
+  function initIdleAsterisk() {
+    const screen = $("#idleScreen");
+    const asterisk = $("#idleAsterisk");
+    if (!screen || !asterisk) return;
+
+    const IDLE_DELAY = 18000;
+    let idleTimer = 0;
+    let animationFrame = 0;
+    let visible = false;
+    let lastFrame = 0;
+    let x = 0;
+    let y = 0;
+    let vx = 0;
+    let vy = 0;
+    let rotation = 0;
+    let scale = 1;
+    let currentEntropy = 35;
+    let currentWeight = 160;
+
+    const randomBetween = (min, max) => min + Math.random() * (max - min);
+
+    function applyShape() {
+      // Cada colisão provoca uma mudança perceptível na forma do asterisco.
+      let nextEntropy = Math.floor(randomBetween(0, 101));
+      if (Math.abs(nextEntropy - currentEntropy) < 28) {
+        nextEntropy = (nextEntropy + Math.floor(randomBetween(38, 64))) % 101;
+      }
+
+      let nextWeight = Math.floor(randomBetween(80, 161));
+      if (Math.abs(nextWeight - currentWeight) < 24) {
+        nextWeight = nextWeight < 120
+          ? Math.min(160, nextWeight + Math.floor(randomBetween(28, 42)))
+          : Math.max(80, nextWeight - Math.floor(randomBetween(28, 42)));
+      }
+
+      currentEntropy = nextEntropy;
+      currentWeight = nextWeight;
+      rotation = randomBetween(-32, 32);
+      scale = randomBetween(.88, 1.16);
+      asterisk.style.fontVariationSettings = variation(currentEntropy, currentWeight);
+      // O ponto de origem coincide com o centro óptico do glifo dentro da caixa de linha.
+      // Assim, a rotação não desloca o asterisco lateralmente nem cria uma margem falsa.
+      asterisk.style.transformOrigin = "50% 21%";
+      asterisk.style.transform = `translate(-50%, -21%) rotate(${rotation}deg) scale(${scale})`;
+    }
+
+    function getHalfBounds() {
+      // A altura da caixa de linha é muito maior que o desenho visível do asterisco.
+      // O glifo ocupa cerca de 0,30 em; usamos sua metade real multiplicada pela escala,
+      // com apenas 2 px de segurança. Isso elimina a margem invisível das colisões.
+      const fontSize = parseFloat(getComputedStyle(asterisk).fontSize) || 680;
+      const visibleGlyphHalf = fontSize * .155 * scale + 2;
+      return {
+        halfWidth: visibleGlyphHalf,
+        halfHeight: visibleGlyphHalf
+      };
+    }
+
+    function keepInsideViewport() {
+      const { halfWidth, halfHeight } = getHalfBounds();
+      const maxX = Math.max(halfWidth, window.innerWidth - halfWidth);
+      const maxY = Math.max(halfHeight, window.innerHeight - halfHeight);
+      x = Math.min(maxX, Math.max(halfWidth, x));
+      y = Math.min(maxY, Math.max(halfHeight, y));
+      asterisk.style.left = `${x}px`;
+      asterisk.style.top = `${y}px`;
+    }
+
+    function animate(now) {
+      if (!visible || document.hidden) return;
+      if (!lastFrame) lastFrame = now;
+      const delta = Math.min((now - lastFrame) / 1000, .04);
+      lastFrame = now;
+
+      x += vx * delta;
+      y += vy * delta;
+
+      let bouncedX = false;
+      let bouncedY = false;
+      let bounds = getHalfBounds();
+      const maxX = Math.max(bounds.halfWidth, window.innerWidth - bounds.halfWidth);
+      const maxY = Math.max(bounds.halfHeight, window.innerHeight - bounds.halfHeight);
+
+      if (x <= bounds.halfWidth) {
+        x = bounds.halfWidth;
+        vx = Math.abs(vx);
+        bouncedX = true;
+      } else if (x >= maxX) {
+        x = maxX;
+        vx = -Math.abs(vx);
+        bouncedX = true;
+      }
+
+      if (y <= bounds.halfHeight) {
+        y = bounds.halfHeight;
+        vy = Math.abs(vy);
+        bouncedY = true;
+      } else if (y >= maxY) {
+        y = maxY;
+        vy = -Math.abs(vy);
+        bouncedY = true;
+      }
+
+      if (bouncedX || bouncedY) {
+        // O asterisco muda de desenho no exato momento em que toca uma borda.
+        applyShape();
+        bounds = getHalfBounds();
+        const nextMaxX = Math.max(bounds.halfWidth, window.innerWidth - bounds.halfWidth);
+        const nextMaxY = Math.max(bounds.halfHeight, window.innerHeight - bounds.halfHeight);
+        x = Math.min(nextMaxX, Math.max(bounds.halfWidth, x));
+        y = Math.min(nextMaxY, Math.max(bounds.halfHeight, y));
+      }
+
+      asterisk.style.left = `${x}px`;
+      asterisk.style.top = `${y}px`;
+      animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function startMotion() {
+      const bounds = getHalfBounds();
+      const minX = bounds.halfWidth;
+      const maxX = Math.max(minX, window.innerWidth - bounds.halfWidth);
+      const minY = bounds.halfHeight;
+      const maxY = Math.max(minY, window.innerHeight - bounds.halfHeight);
+      x = randomBetween(minX, maxX);
+      y = randomBetween(minY, maxY);
+      const speed = randomBetween(215, 270);
+      const angle = randomBetween(-Math.PI * .42, Math.PI * .42);
+      const horizontalDirection = Math.random() < .5 ? -1 : 1;
+      const verticalDirection = Math.random() < .5 ? -1 : 1;
+      vx = Math.cos(angle) * speed * horizontalDirection;
+      vy = Math.sin(angle) * speed * verticalDirection;
+      if (Math.abs(vy) < 80) vy = 80 * verticalDirection;
+      lastFrame = 0;
+      asterisk.style.left = `${x}px`;
+      asterisk.style.top = `${y}px`;
+      // A forma inicial é aleatória; depois só se transforma nas colisões.
+      applyShape();
+      animationFrame = window.requestAnimationFrame(animate);
+    }
+
+    function stopMotion() {
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      lastFrame = 0;
+    }
+
+    function hideIdleScreen() {
+      if (!visible) {
+        scheduleIdle();
+        return;
+      }
+      visible = false;
+      stopMotion();
+      screen.classList.remove("is-visible");
+      screen.setAttribute("aria-hidden", "true");
+      scheduleIdle();
+    }
+
+    function showIdleScreen() {
+      if (document.hidden) return;
+      visible = true;
+      screen.classList.add("is-visible");
+      screen.setAttribute("aria-hidden", "false");
+      startMotion();
+    }
+
+    function scheduleIdle() {
+      window.clearTimeout(idleTimer);
+      if (document.hidden) return;
+      idleTimer = window.setTimeout(showIdleScreen, IDLE_DELAY);
+    }
+
+    window.addEventListener("resize", () => {
+      if (visible) keepInsideViewport();
+    }, { passive: true });
+
+    const activityEvents = ["pointermove", "pointerdown", "keydown", "wheel", "scroll", "touchstart", "click"];
+    activityEvents.forEach(eventName => {
+      document.addEventListener(eventName, hideIdleScreen, { passive: true, capture: true });
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        window.clearTimeout(idleTimer);
+        stopMotion();
+        if (visible) {
+          visible = false;
+          screen.classList.remove("is-visible");
+          screen.setAttribute("aria-hidden", "true");
+        }
+      } else {
+        scheduleIdle();
+      }
+    });
+
+    scheduleIdle();
+  }
+
   function initTester() {
     const input = $("#testerInput");
     const preview = $("#testerPreview");
@@ -305,6 +624,8 @@
     }
   });
 
+  initInteractiveCover();
+  initIdleAsterisk();
   initTester();
   initAnimatedBrand();
   renderGlyphGrid();
